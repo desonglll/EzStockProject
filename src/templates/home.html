@@ -1,0 +1,6 @@
+{% extends "base.html" %}
+{% block base %}
+    {% for item in response %}
+        <li>{{ item.title }}</li>
+    {% endfor %}
+{% endblock %}
