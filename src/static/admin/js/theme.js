@@ -10,7 +10,6 @@
             document.documentElement.dataset.theme = mode;
             localStorage.setItem("theme", mode);
         }
-
         function cycleTheme() {
             const currentTheme = localStorage.getItem("theme") || "auto";
             const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
