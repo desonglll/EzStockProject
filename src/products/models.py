@@ -40,7 +40,7 @@ class Product(models.Model):
     status = models.CharField(max_length=255, choices=statusChoice, verbose_name="产品状态")
     created_date = models.DateTimeField(verbose_name="创建时间")
     last_change = models.DateTimeField(verbose_name="上次修改在", auto_now=True)
-    last_change_by = models.CharField(max_length=255, verbose_name="上次修改人员")
+    last_changed_by = models.CharField(max_length=255, verbose_name="上次修改人员")
     valid = models.BooleanField(verbose_name="是否有效")
 
     def __str__(self):

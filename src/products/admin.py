@@ -45,7 +45,7 @@ class ProductAdmin(admin.ModelAdmin):
                    "valid"]
     actions = [make_unreleased, make_released, make_unstore, make_storing, make_stored, make_valid, make_invalid]
     list_display = ["get_image", "id", "title", "price", "category", "valid", "status", "created_date", "last_change",
-                    "last_change_by"]
+                    "last_changed_by"]
     list_display_links = ["id", "title", "price", "category", "valid", "status", "created_date",
                           "last_change"]
     search_fields = ["title", "last_change"]
@@ -73,7 +73,7 @@ class ProductAdmin(admin.ModelAdmin):
     def save_model(self, request, obj, form, change):
         # 在保存之前执行自定义逻辑
         print(f"Saved by {request.user.username}")
-        obj.last_change_by = request.user.username
+        obj.last_changed_by = request.user.username
 
         # 调用父类的 save_model() 方法，实际进行保存
         super(ProductAdmin, self).save_model(request, obj, form, change)
