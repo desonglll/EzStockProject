@@ -16,9 +16,11 @@ from pathlib import Path
 BASE_DIR = Path(__file__).resolve().parent.parent
 STATIC_URL = "/static/"
 STATIC_ROOT = os.path.join(BASE_DIR, "static")
-MEDIA_ROOT = "media"
-UPLOAD_DIR = MEDIA_ROOT + "uploads"
-UPLOAD_ROOT = BASE_DIR / UPLOAD_DIR
+# MEDIA_URL = '/media/'
+MEDIA_ROOT = 'media/'  # write the path to the media folder you just created.
+
+# UPLOAD_DIR = MEDIA_ROOT + "/uploads"
+# UPLOAD_ROOT = BASE_DIR / UPLOAD_DIR
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
@@ -27,7 +29,7 @@ UPLOAD_ROOT = BASE_DIR / UPLOAD_DIR
 SECRET_KEY = "django-insecure-2_m9-*wk*pj0bw#zk8^0_=o$*miju$q4=m^bt$_!zl$rh)jrqk"
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ["*"]
 

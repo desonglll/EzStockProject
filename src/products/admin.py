@@ -1,4 +1,5 @@
 from django.contrib import admin
+from django.utils.html import format_html
 
 from .models import Product
 
@@ -43,10 +44,14 @@ class ProductAdmin(admin.ModelAdmin):
                    "status",
                    "valid"]
     actions = [make_unreleased, make_released, make_unstore, make_storing, make_stored, make_valid, make_invalid]
-    list_display = ["id", "title", "price", "category", "valid", "status", "created_date", "last_change"]
-    list_display_links = ["id", "title", "price", "category", "valid", "status", "created_date", "last_change"]
+    list_display = ["get_image", "id", "title", "price", "category", "valid", "status", "created_date", "last_change"]
+    list_display_links = ["id", "title", "price", "category", "valid", "status", "created_date",
+                          "last_change"]
     search_fields = ["title", "last_change"]
+
     # DateField: 2024-01-01
+    def get_image(self, obj):
+        return format_html('<img src="{}" width="100%" height="100%" />'.format(obj.image.url))
 
     pass
 
