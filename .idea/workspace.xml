@@ -7,7 +7,6 @@
     <list default="true" id="72ac681b-2322-4ce3-a8f7-4d83d2ebec1c" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/EzStock/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/EzStock/settings.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/EzStock/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/EzStock/urls.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/products/admin.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/products/admin.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/products/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/products/models.py" afterDir="false" />
     </list>
@@ -104,7 +103,8 @@
       <workItem from="1704267299218" duration="1237000" />
       <workItem from="1704286392626" duration="691000" />
       <workItem from="1704329777044" duration="624000" />
-      <workItem from="1704350609460" duration="1982000" />
+      <workItem from="1704350609460" duration="2077000" />
+      <workItem from="1704353037958" duration="2757000" />
     </task>
     <servers />
   </component>

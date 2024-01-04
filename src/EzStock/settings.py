@@ -116,7 +116,8 @@ STATICFILES_FINDERS = [
 # Internationalization
 # https://docs.djangoproject.com/en/5.0/topics/i18n/
 
-LANGUAGE_CODE = "zh-hans"
+# LANGUAGE_CODE = "zh-hans"
+LANGUAGE_CODE = "en-US"
 
 TIME_ZONE = "Asia/Chongqing"
 

@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.utils.html import format_html
-
+from django.contrib.auth import models
 from .models import Product
 
 
@@ -44,7 +44,8 @@ class ProductAdmin(admin.ModelAdmin):
                    "status",
                    "valid"]
     actions = [make_unreleased, make_released, make_unstore, make_storing, make_stored, make_valid, make_invalid]
-    list_display = ["get_image", "id", "title", "price", "category", "valid", "status", "created_date", "last_change"]
+    list_display = ["get_image", "id", "title", "price", "category", "valid", "status", "created_date", "last_change",
+                    "last_change_by"]
     list_display_links = ["id", "title", "price", "category", "valid", "status", "created_date",
                           "last_change"]
     search_fields = ["title", "last_change"]
@@ -52,6 +53,30 @@ class ProductAdmin(admin.ModelAdmin):
     # DateField: 2024-01-01
     def get_image(self, obj):
         return format_html('<img src="{}" width="100%" height="100%" />'.format(obj.image.url))
+
+    fieldsets = [
+        (
+            "Basic",
+            {
+                "fields": ["title", "price", "category", "valid", "status", "created_date"]
+            }
+        ),
+        (
+            "Advanced options",
+            {
+                "classes": ["collapse"],
+                "fields": ["description", "image"],
+            },
+        ),
+    ]
+
+    def save_model(self, request, obj, form, change):
+        # 在保存之前执行自定义逻辑
+        print(f"Saved by {request.user.username}")
+        obj.last_change_by = request.user.username
+
+        # 调用父类的 save_model() 方法，实际进行保存
+        super(ProductAdmin, self).save_model(request, obj, form, change)
 
     pass
 
