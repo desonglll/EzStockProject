@@ -21,13 +21,22 @@ function ListPage() {
   };
   useEffect(() => {
     const fetchData = async () => {
-      const response = await axios.get("/api/products", {
+      const instance = axios.create({
+        baseURL: "http://localhost:8000/",
+        // proxy: {
+        //   host: "127.0.0.1",
+        //   port: 9000,
+        // },
+      });
+      const response = await instance.get("/products/", {
         headers: {
           Accept: "application/json",
         },
       });
       const data = response.data;
-      setList(data);
+      console.log(data);
+
+      setList(data.data);
     };
     fetchData();
   }, []);

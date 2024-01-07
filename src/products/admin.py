@@ -40,9 +40,10 @@ def make_invalid(modeladmin, request, queryset):
 
 
 class ProductAdmin(admin.ModelAdmin):
-    list_filter = ["last_change",
-                   "status",
-                   "valid"]
+    list_filter = [
+        "last_change",
+        "status",
+        "valid"]
     actions = [make_unreleased, make_released, make_unstore, make_storing, make_stored, make_valid, make_invalid]
     list_display = ["get_image", "id", "title", "price", "category", "valid", "status", "created_date", "last_change",
                     "last_changed_by"]
@@ -54,21 +55,21 @@ class ProductAdmin(admin.ModelAdmin):
     def get_image(self, obj):
         return format_html('<img src="{}" width="100%" height="100%" />'.format(obj.image.url))
 
-    fieldsets = [
-        (
-            "Basic",
-            {
-                "fields": ["title", "price", "category", "valid", "status", "created_date"]
-            }
-        ),
-        (
-            "Advanced options",
-            {
-                "classes": ["collapse"],
-                "fields": ["description", "image"],
-            },
-        ),
-    ]
+    # fieldsets = [
+    #     (
+    #         "Basic",
+    #         {
+    #             "fields": ["title", "price", "category", "valid", "status", "created_date"]
+    #         }
+    #     ),
+    #     (
+    #         "Advanced options",
+    #         {
+    #             "classes": ["collapse"],
+    #             "fields": ["description", "image"],
+    #         },
+    #     ),
+    # ]
 
     def save_model(self, request, obj, form, change):
         # 在保存之前执行自定义逻辑

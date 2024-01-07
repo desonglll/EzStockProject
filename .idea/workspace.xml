@@ -5,9 +5,50 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="72ac681b-2322-4ce3-a8f7-4d83d2ebec1c" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/frontend.bak/.eslintrc.cjs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend.bak/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend.bak/README.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend.bak/index.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend.bak/package-lock.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend.bak/package.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend.bak/public/vite.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend.bak/src/App.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend.bak/src/assets/react.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend.bak/src/components/Button.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend.bak/src/components/ListPage.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend.bak/src/components/MainPage.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend.bak/src/components/Menu.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend.bak/src/main.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend.bak/src/vite-env.d.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend.bak/tsconfig.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend.bak/tsconfig.node.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend.bak/vite.config.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/components/MenuBar.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/pages/LoginPage.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/pages/MainPage.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/products/migrations/0010_alter_product_category_alter_product_created_date_and_more.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/products/migrations/0011_alter_product_image.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/products/migrations/0012_alter_product_image.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/products/migrations/0013_alter_product_image.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/products/migrations/0014_alter_product_image.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/products/reset_data.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/products/urls.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/App.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/App.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/Button.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/ListPage.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/MainPage.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/main.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/main.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/vite.config.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/vite.config.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/EzStock/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/EzStock/settings.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/EzStock/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/EzStock/urls.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/products/admin.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/products/admin.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/products/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/products/models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/products/serializers.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/products/serializers.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/products/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/products/views.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -44,6 +85,7 @@
   </component>
   <component name="PropertiesComponent">{
   &quot;keyToString&quot;: {
+    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
     &quot;DefaultHtmlFileTemplate&quot;: &quot;HTML File&quot;,
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
@@ -56,11 +98,36 @@
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
     &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
     &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;editing.templates&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.lookFeel&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
 }</component>
   <component name="RunManager">
+    <configuration name="EzStock" type="Python.DjangoServer" factoryName="Django server">
+      <module name="EzStockProject" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+        <env name="DJANGO_SETTINGS_MODULE" value="EzStock.settings" />
+      </envs>
+      <option name="SDK_HOME" value="$PROJECT_DIR$/../miniconda3/envs/EzStock/bin/python" />
+      <option name="SDK_NAME" value="EzStock" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="launchJavascriptDebuger" value="false" />
+      <option name="port" value="8000" />
+      <option name="host" value="0.0.0.0" />
+      <option name="additionalOptions" value="" />
+      <option name="browserUrl" value="" />
+      <option name="runTestServer" value="false" />
+      <option name="runNoReload" value="false" />
+      <option name="useCustomRunCommand" value="false" />
+      <option name="customRunCommand" value="" />
+      <method v="2" />
+    </configuration>
     <configuration name="EzStock" type="Python.DjangoServer" factoryName="Django server">
       <module name="EzStockProject" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -103,11 +170,22 @@
       <workItem from="1704286392626" duration="691000" />
       <workItem from="1704329777044" duration="624000" />
       <workItem from="1704350609460" duration="2077000" />
-      <workItem from="1704353037958" duration="2938000" />
+      <workItem from="1704353037958" duration="2977000" />
+      <workItem from="1704414276308" duration="125000" />
+      <workItem from="1704414409172" duration="99000" />
+      <workItem from="1704414517855" duration="445000" />
+      <workItem from="1704509390728" duration="3000" />
+      <workItem from="1704603043516" duration="3803000" />
+      <workItem from="1704607005620" duration="21000" />
+      <workItem from="1704611152787" duration="9363000" />
+      <workItem from="1704637161623" duration="1602000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
   </component>
 </project>

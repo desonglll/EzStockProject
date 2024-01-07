@@ -44,6 +44,8 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "rest_framework",
+    'corsheaders',  # 浏览器跨域请求
+
     # User apps
     "products",
 ]
@@ -52,11 +54,16 @@ MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     'whitenoise.middleware.WhiteNoiseMiddleware',  # add it exactlyhere for deploy
     "django.contrib.sessions.middleware.SessionMiddleware",
+    'corsheaders.middleware.CorsMiddleware',  # 浏览器跨域请求
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+]
+# 浏览器跨域请求
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:8001",  # React应用的地址]
 ]
 
 ROOT_URLCONF = "EzStock.urls"
