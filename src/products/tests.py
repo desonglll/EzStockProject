@@ -1,9 +1,7 @@
 from django.test import TestCase
 import requests
 
-from products.models import Product, Status
-from products.serializers import StatusSerializer
-
+from products.models import Product
 
 def import_items():
     response = requests.get("https://fakestoreapi.com/products")
@@ -21,13 +19,3 @@ def import_items():
         }
         Product.objects.create(**data)
 
-
-def main():
-    items = Status.objects.all()
-    serializer = StatusSerializer(items, many=True)
-    print(serializer.data)
-
-
-if __name__ == "__main":
-    main()
-    pass
