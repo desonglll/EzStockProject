@@ -1,7 +1,8 @@
+import "bootstrap/dist/css/bootstrap.css";
 import React, { useEffect, useState } from "react";
-import { LikeOutlined, MessageOutlined, StarOutlined } from "@ant-design/icons";
-
-import { Avatar, List, Space } from "antd";
+import { Table } from "antd";
+import type { ColumnsType } from "antd/es/table";
+import type { TableRowSelection } from "antd/es/table/interface";
 import axios from "axios";
 interface Product {
   id: number;
@@ -14,6 +15,20 @@ interface Result {
   message: string;
   data: Product[];
 }
+const columns: ColumnsType<Product> = [
+  {
+    title: "Id",
+    dataIndex: "id",
+  },
+  {
+    title: "Title",
+    dataIndex: "title",
+  },
+  {
+    title: "Price",
+    dataIndex: "price",
+  },
+];
 function ProductList() {
   const [items, setItems] = useState<Result>({
     code: 1,
@@ -28,7 +43,7 @@ function ProductList() {
       try {
         const result = await instance.get("products/");
         setItems(result.data);
-        console.log(result.data);
+        // console.log(result.data);
       } catch (error) {
         console.error(error);
       }
@@ -36,67 +51,58 @@ function ProductList() {
     fetchData();
   }, []);
 
-  const IconText = ({ icon, text }: { icon: React.FC; text: string }) => (
-    <Space>
-      {React.createElement(icon)}
-      {text}
-    </Space>
-  );
-  return (
-    <>
-      <List
-        itemLayout="vertical"
-        size="large"
-        pagination={{
-          onChange: (page) => {
-            console.log(page);
-          },
-          pageSize: 3,
-        }}
-        dataSource={items.data}
-        footer={
-          <div>
-            <b>ant design</b> footer part
-          </div>
-        }
-        renderItem={(item) => (
-          <List.Item
-            key={item.id}
-            actions={[
-              <IconText
-                icon={StarOutlined}
-                text="156"
-                key="list-vertical-star-o"
-              />,
-              <IconText
-                icon={LikeOutlined}
-                text="156"
-                key="list-vertical-like-o"
-              />,
-              <IconText
-                icon={MessageOutlined}
-                text="2"
-                key="list-vertical-message"
-              />,
-            ]}
-            extra={
-              <img
-                width={272}
-                alt="logo"
-                src="https://gw.alipayobjects.com/zos/rmsportal/mqaQswcyDLcXyDKnZfES.png"
-              />
+  const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
+  const onSelectChange = (newSelectedRowKeys: React.Key[]) => {
+    console.log("selectedRowKeys changed: ", newSelectedRowKeys);
+    setSelectedRowKeys(newSelectedRowKeys);
+  };
+
+  const rowSelection: TableRowSelection<Product> = {
+    selectedRowKeys,
+    onChange: onSelectChange,
+    selections: [
+      Table.SELECTION_ALL,
+      Table.SELECTION_INVERT,
+      Table.SELECTION_NONE,
+      {
+        key: "odd",
+        text: "Select Odd Row",
+        onSelect: (changeableRowKeys) => {
+          let newSelectedRowKeys = [];
+          newSelectedRowKeys = changeableRowKeys.filter((_, index) => {
+            if (index % 2 !== 0) {
+              return false;
             }
-          >
-            <List.Item.Meta
-              avatar={<Avatar src={""} />}
-              title={<a href={""}>{item.title}</a>}
-              description={item.description}
-            />
-            {item.description}
-          </List.Item>
-        )}
-      />
-    </>
+            return true;
+          });
+          setSelectedRowKeys(newSelectedRowKeys);
+        },
+      },
+      {
+        key: "even",
+        text: "Select Even Row",
+        onSelect: (changeableRowKeys) => {
+          let newSelectedRowKeys = [];
+          newSelectedRowKeys = changeableRowKeys.filter((_, index) => {
+            if (index % 2 !== 0) {
+              return true;
+            }
+            return false;
+          });
+          setSelectedRowKeys(newSelectedRowKeys);
+        },
+      },
+    ],
+  };
+
+  return (
+    <Table
+      rowKey="id" // 指定每行数据的唯一标识为 id
+      rowSelection={rowSelection}
+      columns={columns}
+      dataSource={items.data}
+      className="container"
+    />
   );
 }
 
