@@ -8,9 +8,7 @@ Date: 2024/1/7
 
 # TODO: Add your code here
 
-from django.urls import path, include
-from . import views
-from rest_framework import routers
+from django.urls import path
 
 from .views import ProductAPIView
 

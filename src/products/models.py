@@ -4,6 +4,7 @@ from django.contrib import admin
 from django.http import JsonResponse
 from django.utils import timezone
 
+
 statusChoice = {
     "0": "未发布",
     "1": "已发布",
@@ -19,6 +20,8 @@ categoryChoice = {
     "3": "家居",
     "4": "汽车"
 }
+
+
 
 
 class Product(models.Model):

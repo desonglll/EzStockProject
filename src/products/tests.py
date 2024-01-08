@@ -1,7 +1,8 @@
 from django.test import TestCase
 import requests
 
-from .models import Product
+from products.models import Product, Status
+from products.serializers import StatusSerializer
 
 
 def import_items():
@@ -19,3 +20,14 @@ def import_items():
             "rating_count": item["rating"]["count"],
         }
         Product.objects.create(**data)
+
+
+def main():
+    items = Status.objects.all()
+    serializer = StatusSerializer(items, many=True)
+    print(serializer.data)
+
+
+if __name__ == "__main":
+    main()
+    pass
