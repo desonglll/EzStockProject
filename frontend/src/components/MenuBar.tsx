@@ -1,4 +1,4 @@
-import React, { ReactNode, useState } from "react";
+import React, { ReactNode, useEffect, useState } from "react";
 import {
   LaptopOutlined,
   NotificationOutlined,
@@ -6,21 +6,14 @@ import {
 } from "@ant-design/icons";
 import type { MenuProps } from "antd";
 import { Breadcrumb, Layout, Menu, theme } from "antd";
-import {
-  Link,
-  Route,
-  Routes,
-  useLocation,
-  useNavigate,
-  useParams,
-} from "react-router-dom";
+import { Route, Routes, useLocation, useNavigate } from "react-router-dom";
 import DetailPage from "../pages/DetailPage";
 import ListPage from "../pages/ListPage";
 import Dashboard from "../pages/Dashboard";
 
 interface BreadItem {
-  title: ReactNode;
-  link: string;
+  title: string;
+  href: string;
 }
 const { Header, Content, Footer, Sider } = Layout;
 
@@ -31,7 +24,7 @@ const items1: MenuProps["items"] = [
   },
   {
     key: 1,
-    label: "List",
+    label: "Products",
   },
 ];
 
@@ -61,56 +54,80 @@ function MenuBar() {
   const {
     token: { colorBgContainer, borderRadiusLG },
   } = theme.useToken();
+
+  const [currentNav, setCurrentNav] = useState(0);
   const navigate = useNavigate();
   const onClickNav = (e: any) => {
     console.log(e.key);
     if (e.key === "0") {
+      setCurrentNav(0);
       navigate("/dashboard");
     }
     if (e.key === "1") {
-      navigate("/list");
+      setCurrentNav(1);
+      navigate("/products");
     }
   };
-  const { Item } = Breadcrumb;
 
-  const routes = [
+  const links = [
     {
-      path: "/",
-      breadcrumbName: "首页",
+      href: "/",
+      title: "首页",
     },
     {
-      path: "/dashboard",
-      breadcrumbName: "仪表盘",
+      href: "/dashboard",
+      title: "控制台",
     },
     {
-      path: "/list",
-      breadcrumbName: "产品列表",
-    },
-    {
-      path: "/list/product/detail",
-      breadcrumbName: "应用详情",
+      href: "/products",
+      title: "产品",
     },
   ];
+
+  const [breadcrumbItems, setBreadcrumbItems] = useState<BreadItem[]>([]);
   const location = useLocation();
-  const pathSnippets = location.pathname.split("/").filter((i) => i);
-  const extraBreadcrumbItems = pathSnippets.map((_, index) => {
-    const url = `/${pathSnippets.slice(0, index + 1).join("/")}`;
-    const route = routes.find((r) => r.path === url);
-    if (route) {
-      return (
-        <Item key={url}>
-          <Link to={url}>{route.breadcrumbName}</Link>
-        </Item>
-      );
+  const changeCurrentNav = () => {
+    console.log(location.pathname);
+    if (location.pathname === "/products") {
+      console.log(1);
+      return "1";
     }
-    return null;
-  });
-  const breadcrumbItems = [
-    <Item key="home">
-      <Link to="/">首页</Link>
-    </Item>,
-    ...extraBreadcrumbItems,
-  ];
+    return "0";
+  };
+  useEffect(() => {
+    changeCurrentNav();
+    // 解析 location.pathname 并生成面包屑
+    const pathSnippets = location.pathname.split("/").filter((i) => i);
+
+    const items: BreadItem[] = pathSnippets.map((snippet, index) => {
+      const url = `/${pathSnippets.slice(0, index + 1).join("/")}`;
+      return { href: url, title: snippet };
+    });
+
+    const newBread: BreadItem[] = [
+      {
+        href: "/",
+        title: "首页",
+      },
+      ...items,
+    ];
+    // if (links.some((link) => link.href === location.pathname)) {
+    //   const matchedLink = links.find((link) => link.href === location.pathname);
+
+    //   if (matchedLink) {
+    //     const newBread: BreadItem[] = [
+    //       ...breadcrumbItems,
+    //       { title: matchedLink.title, href: matchedLink.href },
+    //     ];
+
+    //     console.log(newBread);
+    //     setBreadcrumbItems(newBread);
+    //   }
+    // }
+
+    setBreadcrumbItems(newBread);
+    // console.log(items);
+  }, [location]);
   return (
     <Layout style={{ height: "100%" }}>
       <Header style={{ display: "flex", alignItems: "center" }}>
@@ -118,7 +135,7 @@ function MenuBar() {
         <Menu
           theme="dark"
           mode="horizontal"
-          defaultSelectedKeys={["0"]}
+          defaultSelectedKeys={[changeCurrentNav()]}
           items={items1}
           style={{ flex: 1, minWidth: 0 }}
           onClick={onClickNav}
@@ -126,8 +143,8 @@ function MenuBar() {
       </Header>
 
       <Content style={{ padding: "0 48px" }}>
-        {/* <Breadcrumb items={breadItem} /> */}
-        <Breadcrumb>{breadcrumbItems}</Breadcrumb>
+        {/* <Breadcrumb items={breadcrumbItems} /> */}
+        <Breadcrumb items={breadcrumbItems} />
         <Layout
           style={{
             padding: "24px 0",
@@ -147,12 +164,9 @@ function MenuBar() {
           <Content style={{ padding: "0 24px", minHeight: 280 }}>
             <Routes>
               <Route path="/" Component={Dashboard}></Route>
-              <Route path="/list" Component={ListPage}></Route>
+              <Route path="/products" Component={ListPage}></Route>
               <Route path="/dashboard" Component={Dashboard}></Route>
-              <Route
-                path="/list/product/detail/:id"
-                Component={DetailPage}
-              ></Route>
+              <Route path="/products/detail/:id" Component={DetailPage}></Route>
             </Routes>
           </Content>
         </Layout>

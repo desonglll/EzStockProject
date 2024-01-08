@@ -38,7 +38,7 @@ function ListPage() {
       <ul className="list-group">
         {items?.map((item: Product) => (
           <li className="list-group-item" key={item.id}>
-            <Link to={`/list/product/detail/${item.id}`}>{item.title}</Link>
+            <Link to={`/products/detail/${item.id}`}>{item.title}</Link>
           </li>
         ))}
       </ul>
