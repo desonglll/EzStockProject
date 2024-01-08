@@ -4,7 +4,6 @@ from django.contrib import admin
 from django.http import JsonResponse
 from django.utils import timezone
 
-
 statusChoice = {
     "0": "未发布",
     "1": "已发布",
@@ -20,8 +19,6 @@ categoryChoice = {
     "3": "家居",
     "4": "汽车"
 }
-
-
 
 
 class Product(models.Model):
@@ -41,7 +38,7 @@ class Product(models.Model):
     category = models.CharField(blank=True, max_length=255, choices=categoryChoice, default="0",
                                 verbose_name="产品分类")
     # file will be saved to MEDIA_ROOT/uploads/2015/01/30
-    image = models.ImageField( default='default.jpg', upload_to="images/%Y/%m/%d/",
+    image = models.ImageField(default='default.jpg', upload_to="images/%Y/%m/%d/",
                               verbose_name="产品图片")
     status = models.CharField(blank=True, default=0, max_length=255, choices=statusChoice, verbose_name="产品状态")
     created_date = models.DateTimeField(blank=True, default=timezone.now, verbose_name="创建时间")

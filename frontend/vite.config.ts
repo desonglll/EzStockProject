@@ -6,5 +6,8 @@ export default defineConfig({
   plugins: [react()],
   server: {
     port: 8001,
+    proxy: {
+      // "/products": "http://localhost:8000/",
+    },
   },
 });

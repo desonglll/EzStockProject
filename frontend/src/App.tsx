@@ -1,35 +1,17 @@
 import "bootstrap/dist/css/bootstrap.css";
-import {
-  Link,
-  NavLink,
-  Route,
-  BrowserRouter as Router,
-  Routes,
-} from "react-router-dom";
-import MainPage from "./pages/MainPage.tsx";
-import LoginPage from "./pages/LoginPage.tsx";
-import MenuBar from "./components/MenuBar.tsx";
-import Dashboard from "./pages/Dashboard.tsx";
-import ProductList from "./components/ProductList.tsx";
+import ListPage from "./pages/ListPage";
+import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
+import MenuBar from "./components/MenuBar";
+
 function App() {
   return (
-    <>
-      <Router>
-        {/* Control our web using Router */}
-        <header>
-          <nav>{/* <Link to={"/"}>Home</Link> */}</nav>
-        </header>
-        <MenuBar />
+    <Router>
+      <>
         <Routes>
-          {/* <Route path="/" element={App()} /> */}
-          <Route path="/" element={Dashboard()} />
-          <Route path="/dashboard" element={Dashboard()} />
-          <Route path="/list" element={ProductList()} />
-          <Route path="/login" element={LoginPage()} />
-          <Route path="/about" element={<h1>About Page</h1>} />
+          <Route path="*" Component={MenuBar}></Route>
         </Routes>
-      </Router>
-    </>
+      </>
+    </Router>
   );
 }
 

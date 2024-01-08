@@ -3,6 +3,9 @@ from .models import Product
 
 
 class ProductSerializer(serializers.HyperlinkedModelSerializer):
+    created_date = serializers.DateTimeField(format="%Y-%m-%d %H:%M:%S")
+    last_change = serializers.DateTimeField(format="%Y-%m-%d %H:%M:%S")
+
     class Meta:
         model = Product
         # fields = '__all__'

@@ -10,7 +10,7 @@ Date: 2024/1/7
 
 from django.urls import path
 
-from .views import ProductAPIView
+from .views import ProductAPIView, StatusAPIView, CategoryAPIView
 
 urlpatterns = [
     # 列表： / get
@@ -19,5 +19,7 @@ urlpatterns = [
     # 修改： /[pid]/ put
     # 删除： /[pid]/ delete
     path("", ProductAPIView.as_view()),
-    path("<int:pid>/", ProductAPIView.as_view()),
+    path("<int:pid>", ProductAPIView.as_view()),
+    path("status", StatusAPIView.as_view()),
+    path("cate", CategoryAPIView.as_view()),
 ]

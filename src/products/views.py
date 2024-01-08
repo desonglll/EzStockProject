@@ -1,10 +1,11 @@
 from django.core.serializers import serialize
 from django.db.models import Count
 from django.http import HttpResponse, JsonResponse, Http404
+from django.utils import timezone
 from rest_framework.exceptions import ValidationError
 from rest_framework.views import APIView
 
-from .models import Product, Result
+from .models import Product, Result, statusChoice, categoryChoice
 from .serializers import ProductSerializer
 
 
@@ -102,7 +103,38 @@ class ProductAPIView(APIView):
         product = self.get_object(pid)
         serializer = ProductSerializer(product, data=request.data)
         if serializer.is_valid():
+            print("aaa")
+            # 手动更新 last_change 字段
+            serializer.validated_data['last_change'] = timezone.now()
+
             serializer.save()
             return Result.success(serializer.data)
         else:
+            print("bbbb")
             return Result.error(serializer.errors)
+
+
+class StatusAPIView(APIView):
+    def get(self, request):
+        result = []
+        for key, value in statusChoice.items():
+            item = {
+                "id": key,
+                "status_name": value,
+                "count": Product.objects.filter(status=key).count(),
+            }
+            result.append(item)
+        return Result.success(result)
+
+
+class CategoryAPIView(APIView):
+    def get(self, request):
+        result = []
+        for key, value in categoryChoice.items():
+            item = {
+                "id": key,
+                "category_name": value,
+                "count": Product.objects.filter(category=key).count(),
+            }
+            result.append(item)
+        return Result.success(result)
