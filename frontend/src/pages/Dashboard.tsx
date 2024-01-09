@@ -15,10 +15,14 @@ function Dashboard() {
       try {
         const statusData = await getStatus();
 
-        const updatedItems = statusData.map((item: Status) => ({
-          value: item.count,
-          name: item.status_name,
-        }));
+        const updatedItems = statusData.map((item: Status) => {
+          if (item.id !== "0") {
+            return {
+              value: item.count,
+              name: item.status_name,
+            };
+          }
+        });
 
         const some_option = {
           title: {
@@ -60,7 +64,7 @@ function Dashboard() {
     <>
       {
         <ReactECharts
-          style={{ height: "100%", width: "100%" }}
+          style={{ height: "500px", width: "100%" }}
           option={option}
         />
       }

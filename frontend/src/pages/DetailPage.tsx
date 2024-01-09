@@ -94,7 +94,7 @@ function DetailPage() {
         const statusChoice = statusData.map((item: Status) => ({
           label: item.status_name,
           value: item.id,
-          disabled: false,
+          disabled: item.id === "0" ? true : false,
         }));
         setStatusChoice(statusChoice);
         //设置categoryChoice
@@ -102,7 +102,7 @@ function DetailPage() {
         const categoryChoice = categoryData.map((item: Catagory) => ({
           label: item.category_name,
           value: item.id,
-          disabled: false,
+          disabled: item.id === "0" ? true : false,
         }));
         setCategoryChoice(categoryChoice);
       } catch (error) {

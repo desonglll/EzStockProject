@@ -3,6 +3,7 @@ from django.db.models import Count
 from django.http import HttpResponse, JsonResponse, Http404
 from django.utils import timezone
 from rest_framework.exceptions import ValidationError
+from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from .models import Product, Result, statusChoice, categoryChoice
@@ -127,6 +128,20 @@ class StatusAPIView(APIView):
         return Result.success(result)
 
 
+class ByStatusAPIView(APIView):
+    def get(self, request, sid=None):
+        if sid is not None and sid != 0:
+            print(sid)
+            products = Product.objects.filter(status=sid)
+            serializer = ProductSerializer(products, many=True)
+            return Result.success(data=serializer.data)
+        else:
+            print(sid)
+            products = Product.objects.all()
+            serializer = ProductSerializer(products, many=True)
+            return Result.success(data=serializer.data)
+
+
 class CategoryAPIView(APIView):
     def get(self, request):
         result = []
@@ -138,3 +153,17 @@ class CategoryAPIView(APIView):
             }
             result.append(item)
         return Result.success(result)
+
+
+class ByCategoryAPIView(APIView):
+    def get(self, request, cid=None):
+        if cid is not None and cid != 0:
+            print(cid)
+            products = Product.objects.filter(category=cid)
+            serializer = ProductSerializer(products, many=True)
+            return Result.success(data=serializer.data)
+        else:
+            print("No such category")
+            products = Product.objects.all()
+            serializer = ProductSerializer(products, many=True)
+            return Result.success(data=serializer.data)
