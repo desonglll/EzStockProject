@@ -152,6 +152,8 @@ function MenuBar() {
                 <Route path="/" Component={Dashboard}></Route>
                 <Route path="/dashboard" Component={Dashboard}></Route>
                 <Route path="/products" Component={ListPage}></Route>
+                <Route path="/products/new" Component={DetailPage}></Route>
+
                 <Route
                   path="/products/by_status/:sid?"
                   Component={ListPage}
