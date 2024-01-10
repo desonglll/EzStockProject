@@ -1,3 +1,4 @@
+from django.core.paginator import Paginator, EmptyPage
 from django.core.serializers import serialize
 from django.db.models import Count
 from django.http import HttpResponse, JsonResponse, Http404
@@ -45,14 +46,29 @@ class ProductAPIView(APIView):
             },
 
         """
+
+        page = request.GET.get('page', 1)
+        page_size = request.GET.get('page_size', 10)
+
         if pid:
             product = self.get_object(pid)
             serializer = ProductSerializer(product)
             return Result.success(data=serializer.data)
         else:
-            products = Product.objects.all()
-            serializer = ProductSerializer(products, many=True)
-            return Result.success(data=serializer.data)
+            # 设定获取所有数据时是按照什么样的排序进行
+            products = Product.objects.all().order_by('id')
+            paginator = Paginator(products, page_size)
+            try:
+                current_page_data = paginator.page(page)
+                print(f"Get page: {page}, Current Page: {current_page_data}")
+                serialized_data = ProductSerializer(current_page_data, many=True).data
+                total_items = paginator.count  # 获取总条目数
+                params = {
+                    "total_items": total_items,
+                }
+                return Result.success(data=serialized_data, params=params)
+            except EmptyPage:
+                return Result.error(msg="Invalid page number")
 
     def post(self, request):
         """Add a new product
@@ -133,16 +149,38 @@ class StatusAPIView(APIView):
 
 class ByStatusAPIView(APIView):
     def get(self, request, sid=None):
+        page = request.GET.get('page', 1)
+        page_size = request.GET.get('page_size', 10)
         if sid is not None and sid != 0:
             print(sid)
-            products = Product.objects.filter(status=sid)
-            serializer = ProductSerializer(products, many=True)
-            return Result.success(data=serializer.data)
+            products = Product.objects.filter(status=sid).order_by('id')
+            paginator = Paginator(products, page_size)
+            try:
+                current_page_data = paginator.page(page)
+                print(f"Get page: {page}, Current Page: {current_page_data}")
+                serialized_data = ProductSerializer(current_page_data, many=True).data
+                total_items = paginator.count  # 获取总条目数
+                params = {
+                    "total_items": total_items,
+                }
+                return Result.success(data=serialized_data, params=params)
+            except EmptyPage:
+                return Result.error(msg="Invalid page number")
         else:
-            print(sid)
-            products = Product.objects.all()
-            serializer = ProductSerializer(products, many=True)
-            return Result.success(data=serializer.data)
+            print("No such status")
+            products = Product.objects.all().order_by('id')
+            paginator = Paginator(products, page_size)
+            try:
+                current_page_data = paginator.page(page)
+                print(f"Get page: {page}, Current Page: {current_page_data}")
+                serialized_data = ProductSerializer(current_page_data, many=True).data
+                total_items = paginator.count  # 获取总条目数
+                params = {
+                    "total_items": total_items,
+                }
+                return Result.success(data=serialized_data, params=params)
+            except EmptyPage:
+                return Result.error(msg="Invalid page number")
 
 
 class CategoryAPIView(APIView):
@@ -160,13 +198,35 @@ class CategoryAPIView(APIView):
 
 class ByCategoryAPIView(APIView):
     def get(self, request, cid=None):
+        page = request.GET.get('page', 1)
+        page_size = request.GET.get('page_size', 10)
         if cid is not None and cid != 0:
             print(cid)
-            products = Product.objects.filter(category=cid)
-            serializer = ProductSerializer(products, many=True)
-            return Result.success(data=serializer.data)
+            products = Product.objects.filter(category=cid).order_by('id')
+            paginator = Paginator(products, page_size)
+            try:
+                current_page_data = paginator.page(page)
+                print(f"Get page: {page}, Current Page: {current_page_data}")
+                serialized_data = ProductSerializer(current_page_data, many=True).data
+                total_items = paginator.count  # 获取总条目数
+                params = {
+                    "total_items": total_items,
+                }
+                return Result.success(data=serialized_data, params=params)
+            except EmptyPage:
+                return Result.error(msg="Invalid page number")
         else:
             print("No such category")
-            products = Product.objects.all()
-            serializer = ProductSerializer(products, many=True)
-            return Result.success(data=serializer.data)
+            products = Product.objects.all().order_by('id')
+            paginator = Paginator(products, page_size)
+            try:
+                current_page_data = paginator.page(page)
+                print(f"Get page: {page}, Current Page: {current_page_data}")
+                serialized_data = ProductSerializer(current_page_data, many=True).data
+                total_items = paginator.count  # 获取总条目数
+                params = {
+                    "total_items": total_items,
+                }
+                return Result.success(data=serialized_data, params=params)
+            except EmptyPage:
+                return Result.error(msg="Invalid page number")

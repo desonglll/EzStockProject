@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import Table, { ColumnsType } from "antd/es/table";
 import { TableRowSelection } from "antd/es/table/interface";
-import { Button, Popconfirm, Popover, Space, message } from "antd";
+import { Button, Pagination, Popconfirm, Popover, Space, message } from "antd";
 
 interface Product {
   key: React.Key;
@@ -82,7 +82,6 @@ function ListPage() {
 
   const cancelDelete = (e: number) => {
     console.log(e);
-
     message.error(`取消删除 ${e}`);
   };
 
@@ -147,26 +146,54 @@ function ListPage() {
       ),
     },
   ];
-  const fetchData = async () => {
+
+  const [currentPage, setCurrentPage] = useState<number>(1);
+  const [totalItems, setTotalItems] = useState<number>(0);
+
+  const handlePageChange = (page: number) => {
+    setCurrentPage(page);
+    fetchData(page);
+  };
+  const fetchData = async (page: number = 1) => {
     try {
       if (sid != undefined) {
         console.log("Load sid: ", sid);
-        const response = await instance.get(`/products/by_status/${sid}`);
+        const response = await instance.get(`/products/by_status/${sid}`, {
+          params: {
+            page: page,
+          },
+        });
         // console.log(response.data);
         setResult(response.data);
         setItems(response.data.data);
+
+        setTotalItems(response.data.params["total_items"]); // 设置总条目数
+        console.log(response.data.params["total_items"]);
       } else if (cid != undefined) {
         console.log("Load cid: ", cid);
-        const response = await instance.get(`/products/by_cate/${cid}`);
+        const response = await instance.get(`/products/by_cate/${cid}`, {
+          params: {
+            page: page,
+          },
+        });
         // console.log(response.data);
         setResult(response.data);
         setItems(response.data.data);
+
+        setTotalItems(response.data.params["total_items"]); // 设置总条目数
+        console.log(response.data.params["total_items"]);
       } else {
         console.log("Load all: ");
-        const response = await instance.get("/products/");
-        // console.log(response.data);
+        const response = await instance.get("/products/", {
+          params: {
+            page: page,
+          },
+        });
         setResult(response.data);
         setItems(response.data.data);
+
+        setTotalItems(response.data.params["total_items"]); // 设置总条目数
+        console.log(response.data.params["total_items"]);
       }
     } catch (error) {
       console.log(error);
@@ -183,15 +210,14 @@ function ListPage() {
         columns={columns}
         dataSource={items}
         rowKey="id"
+        pagination={false}
       />
-
-      {/* <ul className="list-group">
-        {items?.map((item: Product) => (
-          <li className="list-group-item list-group-item-action" key={item.id}>
-            <Link to={`/products/detail/${item.id}`}>{item.title}</Link>
-          </li>
-        ))}
-      </ul> */}
+      <Pagination
+        current={currentPage}
+        total={totalItems}
+        pageSize={10} // 设置每页显示的条目数
+        onChange={handlePageChange}
+      />
     </>
   );
 }

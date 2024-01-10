@@ -5,10 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="72ac681b-2322-4ce3-a8f7-4d83d2ebec1c" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/frontend/src/pages/CreateProductPage.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/src/components/MenuBar.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/MenuBar.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/pages/Dashboard.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/Dashboard.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/pages/CreateProductPage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/CreateProductPage.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/pages/ListPage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/ListPage.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/products/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/products/models.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/products/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/products/views.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -184,7 +185,7 @@
       <workItem from="1704684749005" duration="11414000" />
       <workItem from="1704760389472" duration="4819000" />
       <workItem from="1704776385126" duration="9466000" />
-      <workItem from="1704872571486" duration="1473000" />
+      <workItem from="1704872571486" duration="4846000" />
     </task>
     <servers />
   </component>

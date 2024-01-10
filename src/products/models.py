@@ -55,8 +55,9 @@ class Product(models.Model):
 class Result:
 
     @classmethod
-    def success(cls, data):
-        return JsonResponse({"code": 1, "message": "success", "data": data}, status=200)
+    def success(cls, data, params=None):
+        return JsonResponse(
+            {"code": 1, "message": "success", "data": data, "params": params if params is not None else ""}, status=200)
 
     @classmethod
     def error(cls, msg: str):

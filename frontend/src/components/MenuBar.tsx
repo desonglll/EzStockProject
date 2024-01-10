@@ -1,13 +1,9 @@
 import React, { ReactElement, ReactNode, useEffect, useState } from "react";
 import {
   AppstoreOutlined,
-  CalendarOutlined,
-  LinkOutlined,
-  MailOutlined,
-  SettingOutlined,
-  UserOutlined,
-  LaptopOutlined,
-  NotificationOutlined,
+  DashboardOutlined,
+  FileAddOutlined,
+  OrderedListOutlined,
 } from "@ant-design/icons";
 import type { MenuProps } from "antd";
 import { Layout, Menu, theme } from "antd";
@@ -74,19 +70,19 @@ function MenuBar() {
     {
       label: "根据状态",
       key: "status",
-      icon: <MailOutlined />,
+      icon: <DashboardOutlined />,
       children: statusItems,
     },
     {
       label: "根据分类",
       key: "category",
-      icon: <MailOutlined />,
+      icon: <OrderedListOutlined />,
       children: cateItems,
     },
     {
       label: "新建产品",
       key: "products/new",
-      icon: <MailOutlined />,
+      icon: <FileAddOutlined />,
     },
     {
       label: (

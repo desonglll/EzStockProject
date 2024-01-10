@@ -5,11 +5,8 @@ import {
   DatePickerProps,
   Form,
   Input,
-  Popconfirm,
-  Popover,
   Radio,
   RadioChangeEvent,
-  Row,
   Select,
   Space,
   Spin,
@@ -72,17 +69,36 @@ interface Choice {
 function DetailPage() {
   // 使用useParams获取路由参数
   const { id } = useParams();
-  const [result, setResult] = useState<Result>();
-  const [data, setData] = useState<Product>();
   const [loading, setLoading] = useState(true);
   const [statusChoice, setStatusChoice] = useState<Choice[]>();
   const [categoryChoice, setCategoryChoice] = useState<Choice[]>();
-  const navigate = useNavigate();
-  const instance = axios.create({
-    // baseURL: "http://localhost:8000",
-  });
-
-  useEffect(() => {}, []);
+  const fetchData = async () => {
+    try {
+      console.log(await getStatus());
+      const statusData = await getStatus();
+      const statusChoice = statusData.map((item: Status) => ({
+        label: item.status_name,
+        value: item.id,
+        disabled: item.id === "0" ? true : false,
+      }));
+      setStatusChoice(statusChoice);
+      //设置categoryChoice
+      const categoryData = await getCategory();
+      const categoryChoice = categoryData.map((item: Catagory) => ({
+        label: item.category_name,
+        value: item.id,
+        disabled: item.id === "0" ? true : false,
+      }));
+      setCategoryChoice(categoryChoice);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setLoading(false);
+    }
+  };
+  useEffect(() => {
+    fetchData();
+  }, []);
   const onFinish = async (values: Product) => {
     // Form put action
     try {
@@ -116,86 +132,85 @@ function DetailPage() {
   };
 
   return (
-    <div>
-      <>
-        {
-          <div style={{ marginLeft: 0 }}>
-            <Form
-              name="basic"
-              labelCol={{ span: 8 }}
-              wrapperCol={{ span: 16 }}
-              style={{ maxWidth: 600 }}
-              initialValues={{}}
-              onFinish={onFinish}
-              onFinishFailed={onFinishFailed}
-              autoComplete="off"
-              className="container"
-            >
-              <Form.Item<ProductType> label="编号" name={"id"}>
-                <Popover content={id} title="Id">
-                  <Button type="primary">{id}</Button>
-                </Popover>
-              </Form.Item>
-              <Form.Item<ProductType> label="标题" name={"title"}>
-                <Input />
-              </Form.Item>
-              <Form.Item<ProductType> label="价格" name={"price"}>
-                <Input />
-              </Form.Item>
-              <Form.Item<ProductType> label="Description" name={"description"}>
-                <TextArea
-                  showCount
-                  maxLength={500}
-                  onChange={onChange}
-                  style={{ height: 220, resize: "none" }}
-                />
-              </Form.Item>
-              <Form.Item<ProductType> label="分类" name={"category"}>
-                <Select
-                  style={{ width: 120 }}
-                  onChange={onChangeSelect}
-                  options={categoryChoice}
-                />
-              </Form.Item>
-              <Form.Item<ProductType> label="产品状态" name={"status"}>
-                <Select
-                  style={{ width: 120 }}
-                  onChange={onChangeSelect}
-                  options={statusChoice}
-                />
-              </Form.Item>
-              <Form.Item<ProductType>
-                label="Created Date"
-                name={"created_date"}
+    <Spin spinning={loading} tip="Loading...">
+      {loading ? (
+        <div>DetailPage{id}</div>
+      ) : (
+        <>
+          {
+            <div style={{ marginLeft: 0 }}>
+              <Form
+                name="basic"
+                labelCol={{ span: 8 }}
+                wrapperCol={{ span: 16 }}
+                style={{ maxWidth: 600 }}
+                initialValues={{}}
+                onFinish={onFinish}
+                onFinishFailed={onFinishFailed}
+                autoComplete="off"
+                className="container"
               >
-                <DatePicker onChange={onChangeDate} />
-              </Form.Item>
-              <Form.Item<ProductType> label="Last change" name={"last_change"}>
-                <DatePicker onChange={onChangeDate} disabled />
-              </Form.Item>
-              <Form.Item<ProductType> label="是否有效" name={"valid"}>
-                <Radio.Group onChange={onChangeRadio}>
-                  <Radio.Button value="true">True</Radio.Button>
-                  <Radio.Button value="false">False</Radio.Button>
-                </Radio.Group>
-              </Form.Item>
-
-              {
-                <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
-                  <Space>
-                    <Button type="primary" htmlType="submit">
-                      提交
-                    </Button>
-                  </Space>
+                <Form.Item<ProductType> label="标题" name={"title"}>
+                  <Input />
                 </Form.Item>
-              }
-            </Form>
-          </div>
-          // data &&
-        }
-      </>
-      )
-    </div>
+                <Form.Item<ProductType> label="价格" name={"price"}>
+                  <Input />
+                </Form.Item>
+                <Form.Item<ProductType>
+                  label="Description"
+                  name={"description"}
+                >
+                  <TextArea
+                    showCount
+                    maxLength={500}
+                    onChange={onChange}
+                    style={{ height: 220, resize: "none" }}
+                  />
+                </Form.Item>
+                <Form.Item<ProductType> label="分类" name={"category"}>
+                  <Select
+                    style={{ width: 120 }}
+                    onChange={onChangeSelect}
+                    options={categoryChoice}
+                  />
+                </Form.Item>
+                <Form.Item<ProductType> label="产品状态" name={"status"}>
+                  <Select
+                    style={{ width: 120 }}
+                    onChange={onChangeSelect}
+                    options={statusChoice}
+                  />
+                </Form.Item>
+                <Form.Item<ProductType>
+                  label="Created Date"
+                  name={"created_date"}
+                >
+                  <DatePicker onChange={onChangeDate} />
+                </Form.Item>
+
+                <Form.Item<ProductType> label="是否有效" name={"valid"}>
+                  <Radio.Group onChange={onChangeRadio}>
+                    <Radio.Button value="true">True</Radio.Button>
+                    <Radio.Button value="false">False</Radio.Button>
+                  </Radio.Group>
+                </Form.Item>
+
+                {
+                  <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
+                    <Space>
+                      <Button type="primary" htmlType="submit">
+                        提交
+                      </Button>
+                    </Space>
+                  </Form.Item>
+                }
+              </Form>
+            </div>
+            // data &&
+          }
+        </>
+      )}
+    </Spin>
   );
 }
 
