@@ -70,6 +70,9 @@ class ProductAPIView(APIView):
         serializer = ProductSerializer(data=request.data)
         try:
             if serializer.is_valid(raise_exception=True):
+                print("Creating new product")
+                # 手动更新 last_change 字段
+                serializer.validated_data['last_change'] = timezone.now()
                 serializer.save()
                 return Result.success(serializer.data)
         except ValidationError as e:

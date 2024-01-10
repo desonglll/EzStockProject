@@ -10,12 +10,13 @@ import {
   NotificationOutlined,
 } from "@ant-design/icons";
 import type { MenuProps } from "antd";
-import { Breadcrumb, Layout, Menu, theme } from "antd";
+import { Layout, Menu, theme } from "antd";
 import { Route, Routes, useLocation, useNavigate } from "react-router-dom";
 import DetailPage from "../pages/DetailPage";
 import ListPage from "../pages/ListPage";
 import Dashboard from "../pages/Dashboard";
 import { getCategory, getStatus } from "../utils/info";
+import CreateProductPage from "../pages/CreateProductPage";
 
 interface BreadItem {
   title: string;
@@ -83,6 +84,11 @@ function MenuBar() {
       children: cateItems,
     },
     {
+      label: "新建产品",
+      key: "products/new",
+      icon: <MailOutlined />,
+    },
+    {
       label: (
         <a href="https://ant.design" target="_blank" rel="noopener noreferrer">
           Navigation Four - Link
@@ -137,9 +143,10 @@ function MenuBar() {
           items={items}
         />
         {/* </Header> */}
+        <br></br>
 
         <Content style={{ padding: "0 48px" }}>
-          <Breadcrumb items={breadcrumbItems} />
+          {/* <Breadcrumb items={breadcrumbItems} /> */}
           <Layout
             style={{
               padding: "24px 0",
@@ -152,7 +159,10 @@ function MenuBar() {
                 <Route path="/" Component={Dashboard}></Route>
                 <Route path="/dashboard" Component={Dashboard}></Route>
                 <Route path="/products" Component={ListPage}></Route>
-                <Route path="/products/new" Component={DetailPage}></Route>
+                <Route
+                  path="/products/new"
+                  Component={CreateProductPage}
+                ></Route>
 
                 <Route
                   path="/products/by_status/:sid?"
