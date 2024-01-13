@@ -4,6 +4,7 @@ import {
   DashboardOutlined,
   FileAddOutlined,
   OrderedListOutlined,
+  AlignLeftOutlined,
 } from "@ant-design/icons";
 import type { MenuProps } from "antd";
 import { Layout, Menu, theme } from "antd";
@@ -49,13 +50,19 @@ function MenuBar() {
       const statusData = await getStatus();
       const status_item = statusData.map((item: Status) => ({
         label: item.status_name,
-        key: "/products/by_status/" + item.id,
+        key: (() => {
+          // if (item.id === "0") return "/products/";
+          return "/products/by_status/" + item.id;
+        })(),
       }));
       setStatusItems(status_item);
       const cateData = await getCategory();
       const cate_item = cateData.map((item: Catagory) => ({
         label: item.category_name,
-        key: "/products/by_cate/" + item.id,
+        key: (() => {
+          // if (item.id === "0") return "/products/";
+          return "/products/by_cate/" + item.id;
+        })(),
       }));
       setCateItems(cate_item);
     };
@@ -66,6 +73,11 @@ function MenuBar() {
       label: "首页",
       key: "dashboard",
       icon: <AppstoreOutlined />,
+    },
+    {
+      label: "所有",
+      key: "products",
+      icon: <AlignLeftOutlined />,
     },
     {
       label: "根据状态",
@@ -111,20 +123,20 @@ function MenuBar() {
       },
       ...items,
     ];
-    console.log("useEffect called");
+    // console.log("useEffect called");
     setBreadcrumbItems(newBread);
     // console.log(items);
   }, [location.pathname, navigate]);
   const [current, setCurrent] = useState("mail");
 
   const onClick: MenuProps["onClick"] = (e) => {
-    console.log("click ", e);
+    // console.log("click ", e);
     setCurrent(e.key);
     navigate(e.key);
   };
 
   const onSelect: MenuProps["onSelect"] = (e) => {
-    console.log(e.key);
+    // console.log(e.key);
   };
 
   return (

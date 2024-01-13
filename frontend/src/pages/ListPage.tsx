@@ -12,6 +12,7 @@ interface Product {
   title: string;
   price: string;
   status: string;
+  category: string;
   last_change: any;
 }
 
@@ -32,7 +33,7 @@ function ListPage() {
   });
   const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
   const onSelectChange = (newSelectedRowKeys: React.Key[]) => {
-    console.log("selectedRowKeys changed: ", newSelectedRowKeys);
+    // console.log("selectedRowKeys changed: ", newSelectedRowKeys);
     setSelectedRowKeys(newSelectedRowKeys);
   };
   const rowSelection: TableRowSelection<Product> = {
@@ -95,19 +96,23 @@ function ListPage() {
       },
     },
     {
-      title: "TITLE",
+      title: "标题",
       dataIndex: "title",
     },
     {
-      title: "PRICE",
+      title: "价格",
       dataIndex: "price",
     },
     {
-      title: "STATUS",
+      title: "状态",
       dataIndex: "status",
     },
     {
-      title: "LAST CHANGE",
+      title: "分类",
+      dataIndex: "category",
+    },
+    {
+      title: "上次修改时间",
       dataIndex: "last_change",
       sorter: {
         compare: (a, b) => {
@@ -150,6 +155,7 @@ function ListPage() {
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [totalItems, setTotalItems] = useState<number>(0);
 
+  // const [useable_data, setUseableData] = useState<Product[]>([]);
   const handlePageChange = (page: number) => {
     setCurrentPage(page);
     fetchData(page);
@@ -165,10 +171,31 @@ function ListPage() {
         });
         // console.log(response.data);
         setResult(response.data);
+        const useable_data = response.data.data.map((item: Product) => ({
+          id: item.id,
+          title: item.title,
+          price: item.price,
+          status: (() => {
+            if (item.status === "1") return "未发布";
+            if (item.status === "2") return "已发布";
+            if (item.status === "3") return "未入库";
+            if (item.status === "4") return "入库中";
+            if (item.status === "5") return "已入库";
+          })(),
+          category: (() => {
+            if (item.category === "1") return "未分类";
+            if (item.category === "2") return "服饰";
+            if (item.category === "3") return "电子";
+            if (item.category === "4") return "家居";
+            if (item.category === "5") return "汽车";
+          })(),
+          last_change: item.last_change,
+        }));
         setItems(response.data.data);
+        setItems(useable_data);
 
         setTotalItems(response.data.params["total_items"]); // 设置总条目数
-        console.log(response.data.params["total_items"]);
+        // console.log(response.data.params["total_items"]);
       } else if (cid != undefined) {
         console.log("Load cid: ", cid);
         const response = await instance.get(`/products/by_cate/${cid}`, {
@@ -178,22 +205,63 @@ function ListPage() {
         });
         // console.log(response.data);
         setResult(response.data);
+        const useable_data = response.data.data.map((item: Product) => ({
+          id: item.id,
+          title: item.title,
+          price: item.price,
+          status: (() => {
+            if (item.status === "1") return "未发布";
+            if (item.status === "2") return "已发布";
+            if (item.status === "3") return "未入库";
+            if (item.status === "4") return "入库中";
+            if (item.status === "5") return "已入库";
+          })(),
+          category: (() => {
+            if (item.category === "1") return "未分类";
+            if (item.category === "2") return "服饰";
+            if (item.category === "3") return "电子";
+            if (item.category === "4") return "家居";
+            if (item.category === "5") return "汽车";
+          })(),
+          last_change: item.last_change,
+        }));
         setItems(response.data.data);
-
+        setItems(useable_data);
         setTotalItems(response.data.params["total_items"]); // 设置总条目数
-        console.log(response.data.params["total_items"]);
+        // console.log(response.data.params["total_items"]);
       } else {
-        console.log("Load all: ");
+        // console.log("Load all: ");
         const response = await instance.get("/products/", {
           params: {
             page: page,
           },
         });
         setResult(response.data);
+        const useable_data = response.data.data.map((item: Product) => ({
+          id: item.id,
+          title: item.title,
+          price: item.price,
+          status: (() => {
+            if (item.status === "1") return "未发布";
+            if (item.status === "2") return "已发布";
+            if (item.status === "3") return "未入库";
+            if (item.status === "4") return "入库中";
+            if (item.status === "5") return "已入库";
+          })(),
+          category: (() => {
+            if (item.category === "1") return "未分类";
+            if (item.category === "2") return "服饰";
+            if (item.category === "3") return "电子";
+            if (item.category === "4") return "家居";
+            if (item.category === "5") return "汽车";
+          })(),
+          last_change: item.last_change,
+        }));
         setItems(response.data.data);
+        setItems(useable_data);
 
         setTotalItems(response.data.params["total_items"]); // 设置总条目数
-        console.log(response.data.params["total_items"]);
+        // console.log(response.data.params["total_items"]);
       }
     } catch (error) {
       console.log(error);

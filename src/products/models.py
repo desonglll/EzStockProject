@@ -5,7 +5,7 @@ from django.http import JsonResponse
 from django.utils import timezone
 
 statusChoice = {
-    "0": "全部",
+    # "0": "全部",
     "1": "未发布",
     "2": "已发布",
     "3": "未入库",
@@ -14,7 +14,7 @@ statusChoice = {
 }
 
 categoryChoice = {
-    "0": "全部",
+    # "0": "全部",
     "1": "未分类",
     "2": "服饰",
     "3": "电子",
@@ -24,6 +24,7 @@ categoryChoice = {
 
 
 class Product(models.Model):
+
     @admin.display(
         boolean=True,
         ordering="valid",

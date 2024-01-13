@@ -56,7 +56,7 @@ class ProductAPIView(APIView):
             return Result.success(data=serializer.data)
         else:
             # 设定获取所有数据时是按照什么样的排序进行
-            products = Product.objects.all().order_by('id')
+            products = Product.objects.all().order_by('-id')
             paginator = Paginator(products, page_size)
             try:
                 current_page_data = paginator.page(page)
@@ -153,7 +153,7 @@ class ByStatusAPIView(APIView):
         page_size = request.GET.get('page_size', 10)
         if sid is not None and sid != 0:
             print(sid)
-            products = Product.objects.filter(status=sid).order_by('id')
+            products = Product.objects.filter(status=sid).order_by('-id')
             paginator = Paginator(products, page_size)
             try:
                 current_page_data = paginator.page(page)
@@ -168,7 +168,7 @@ class ByStatusAPIView(APIView):
                 return Result.error(msg="Invalid page number")
         else:
             print("No such status")
-            products = Product.objects.all().order_by('id')
+            products = Product.objects.all().order_by('-id')
             paginator = Paginator(products, page_size)
             try:
                 current_page_data = paginator.page(page)
@@ -202,7 +202,7 @@ class ByCategoryAPIView(APIView):
         page_size = request.GET.get('page_size', 10)
         if cid is not None and cid != 0:
             print(cid)
-            products = Product.objects.filter(category=cid).order_by('id')
+            products = Product.objects.filter(category=cid).order_by('-id')
             paginator = Paginator(products, page_size)
             try:
                 current_page_data = paginator.page(page)
@@ -217,7 +217,7 @@ class ByCategoryAPIView(APIView):
                 return Result.error(msg="Invalid page number")
         else:
             print("No such category")
-            products = Product.objects.all().order_by('id')
+            products = Product.objects.all().order_by('-id')
             paginator = Paginator(products, page_size)
             try:
                 current_page_data = paginator.page(page)

@@ -72,6 +72,7 @@ function DetailPage() {
   const [loading, setLoading] = useState(true);
   const [statusChoice, setStatusChoice] = useState<Choice[]>();
   const [categoryChoice, setCategoryChoice] = useState<Choice[]>();
+  const navigate = useNavigate();
   const fetchData = async () => {
     try {
       console.log(await getStatus());
@@ -96,6 +97,7 @@ function DetailPage() {
       setLoading(false);
     }
   };
+
   useEffect(() => {
     fetchData();
   }, []);
@@ -106,6 +108,8 @@ function DetailPage() {
       values.last_change = dayjs().format("YYYY-MM-DD HH:mm:ss");
       const response = await axios.post(`/products/`, values);
       message.success("Click on Yes");
+      // navigate to list page after submit
+      navigate("/products/by_status/0");
       console.log(response);
     } catch (error) {
       console.log(error);
