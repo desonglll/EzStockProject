@@ -26,7 +26,7 @@ interface Status {
   status_name: string;
   count: number;
 }
-interface Catagory {
+interface Category {
   id: string;
   category_name: string;
   count: number;
@@ -57,8 +57,8 @@ function MenuBar() {
         })(),
       }));
       setStatusItems(status_item);
-      const cateData = await getCategory();
-      const cate_item = cateData.map((item: Catagory) => ({
+      const cateData: Category[] = await getCategory();
+      const cate_item = cateData.map((item: Category) => ({
         label: item.category_name,
         key: (() => {
           // if (item.id === "0") return "/products/";

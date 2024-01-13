@@ -27,7 +27,7 @@ interface Status {
   status_name: string;
   count: number;
 }
-interface Catagory {
+interface Category {
   id: string;
   category_name: string;
   count: number;
@@ -101,8 +101,8 @@ function DetailPage() {
       }));
       setStatusChoice(statusChoice);
       //设置categoryChoice
-      const categoryData = await getCategory();
-      const categoryChoice = categoryData.map((item: Catagory) => ({
+      const categoryData: Category[] = await getCategory();
+      const categoryChoice = categoryData.map((item: Category) => ({
         label: item.category_name,
         value: item.id,
         disabled: item.id === "0" ? true : false,

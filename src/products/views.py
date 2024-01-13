@@ -12,9 +12,7 @@ from .serializers import ProductSerializer
 
 
 class ProductAPIView(APIView):
-    """ProductAPIView class
-
-    """
+    """ProductAPIView class"""
 
     def get_object(self, pid):
         try:
@@ -47,8 +45,8 @@ class ProductAPIView(APIView):
 
         """
 
-        page = request.GET.get('page', 1)
-        page_size = request.GET.get('page_size', 10)
+        page = request.GET.get("page", 1)
+        page_size = request.GET.get("page_size", 10)
 
         if pid:
             product = self.get_object(pid)
@@ -56,7 +54,7 @@ class ProductAPIView(APIView):
             return Result.success(data=serializer.data)
         else:
             # 设定获取所有数据时是按照什么样的排序进行
-            products = Product.objects.all().order_by('-id')
+            products = Product.objects.all().order_by("-id")
             paginator = Paginator(products, page_size)
             try:
                 current_page_data = paginator.page(page)
@@ -88,7 +86,7 @@ class ProductAPIView(APIView):
             if serializer.is_valid(raise_exception=True):
                 print("Creating new product")
                 # 手动更新 last_change 字段
-                serializer.validated_data['last_change'] = timezone.now()
+                serializer.validated_data["last_change"] = timezone.now()
                 serializer.save()
                 return Result.success(serializer.data)
         except ValidationError as e:
@@ -125,7 +123,7 @@ class ProductAPIView(APIView):
         if serializer.is_valid():
             print("aaa")
             # 手动更新 last_change 字段
-            serializer.validated_data['last_change'] = timezone.now()
+            serializer.validated_data["last_change"] = timezone.now()
 
             serializer.save()
             return Result.success(serializer.data)
@@ -149,11 +147,11 @@ class StatusAPIView(APIView):
 
 class ByStatusAPIView(APIView):
     def get(self, request, sid=None):
-        page = request.GET.get('page', 1)
-        page_size = request.GET.get('page_size', 10)
+        page = request.GET.get("page", 1)
+        page_size = request.GET.get("page_size", 10)
         if sid is not None and sid != 0:
             print(sid)
-            products = Product.objects.filter(status=sid).order_by('-id')
+            products = Product.objects.filter(status=sid).order_by("-id")
             paginator = Paginator(products, page_size)
             try:
                 current_page_data = paginator.page(page)
@@ -168,7 +166,7 @@ class ByStatusAPIView(APIView):
                 return Result.error(msg="Invalid page number")
         else:
             print("No such status")
-            products = Product.objects.all().order_by('-id')
+            products = Product.objects.all().order_by("-id")
             paginator = Paginator(products, page_size)
             try:
                 current_page_data = paginator.page(page)
@@ -198,11 +196,11 @@ class CategoryAPIView(APIView):
 
 class ByCategoryAPIView(APIView):
     def get(self, request, cid=None):
-        page = request.GET.get('page', 1)
-        page_size = request.GET.get('page_size', 10)
+        page = request.GET.get("page", 1)
+        page_size = request.GET.get("page_size", 10)
         if cid is not None and cid != 0:
             print(cid)
-            products = Product.objects.filter(category=cid).order_by('-id')
+            products = Product.objects.filter(category=cid).order_by("-id")
             paginator = Paginator(products, page_size)
             try:
                 current_page_data = paginator.page(page)
@@ -217,7 +215,7 @@ class ByCategoryAPIView(APIView):
                 return Result.error(msg="Invalid page number")
         else:
             print("No such category")
-            products = Product.objects.all().order_by('-id')
+            products = Product.objects.all().order_by("-id")
             paginator = Paginator(products, page_size)
             try:
                 current_page_data = paginator.page(page)
@@ -230,3 +228,12 @@ class ByCategoryAPIView(APIView):
                 return Result.success(data=serialized_data, params=params)
             except EmptyPage:
                 return Result.error(msg="Invalid page number")
+
+
+class InfoAPIView(APIView):
+    def get(self, request):
+        total = Product.objects.all().count()
+        valid = Product.objects.filter(valid=True).count()
+        invalid = Product.objects.filter(valid=False).count()
+        context = {"total": total, "valid": valid, "invalid": invalid}
+        return Result.success(data=context)

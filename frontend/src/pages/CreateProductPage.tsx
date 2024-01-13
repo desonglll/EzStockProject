@@ -10,6 +10,7 @@ import {
   Select,
   Space,
   Spin,
+  TimePicker,
   message,
 } from "antd";
 import axios from "axios";
@@ -24,7 +25,7 @@ interface Status {
   status_name: string;
   count: number;
 }
-interface Catagory {
+interface Category {
   id: string;
   category_name: string;
   count: number;
@@ -73,6 +74,7 @@ function DetailPage() {
   const [statusChoice, setStatusChoice] = useState<Choice[]>();
   const [categoryChoice, setCategoryChoice] = useState<Choice[]>();
   const navigate = useNavigate();
+
   const fetchData = async () => {
     try {
       console.log(await getStatus());
@@ -84,8 +86,8 @@ function DetailPage() {
       }));
       setStatusChoice(statusChoice);
       //设置categoryChoice
-      const categoryData = await getCategory();
-      const categoryChoice = categoryData.map((item: Catagory) => ({
+      const categoryData: Category[] = await getCategory();
+      const categoryChoice = categoryData.map((item: Category) => ({
         label: item.category_name,
         value: item.id,
         disabled: item.id === "0" ? true : false,
@@ -144,25 +146,37 @@ function DetailPage() {
           {
             <div style={{ marginLeft: 0 }}>
               <Form
-                name="basic"
+                name="wrap"
                 labelCol={{ span: 8 }}
                 wrapperCol={{ span: 16 }}
                 style={{ maxWidth: 600 }}
-                initialValues={{}}
+                initialValues={{
+                  description: "Coming soon",
+                  created_date: dayjs(),
+                }}
                 onFinish={onFinish}
                 onFinishFailed={onFinishFailed}
                 autoComplete="off"
                 className="container"
               >
-                <Form.Item<ProductType> label="标题" name={"title"}>
+                <Form.Item<ProductType>
+                  label="标题"
+                  name={"title"}
+                  rules={[{ required: true, message: "请输入标题" }]}
+                >
                   <Input />
                 </Form.Item>
-                <Form.Item<ProductType> label="价格" name={"price"}>
+                <Form.Item<ProductType>
+                  label="价格"
+                  name={"price"}
+                  rules={[{ required: true, message: "请输入价格" }]}
+                >
                   <Input />
                 </Form.Item>
                 <Form.Item<ProductType>
                   label="Description"
                   name={"description"}
+                  rules={[{ required: true, message: "请输入描述" }]}
                 >
                   <TextArea
                     showCount
@@ -171,14 +185,22 @@ function DetailPage() {
                     style={{ height: 220, resize: "none" }}
                   />
                 </Form.Item>
-                <Form.Item<ProductType> label="分类" name={"category"}>
+                <Form.Item<ProductType>
+                  label="分类"
+                  name={"category"}
+                  rules={[{ required: true, message: "请选择分类" }]}
+                >
                   <Select
                     style={{ width: 120 }}
                     onChange={onChangeSelect}
                     options={categoryChoice}
                   />
                 </Form.Item>
-                <Form.Item<ProductType> label="产品状态" name={"status"}>
+                <Form.Item<ProductType>
+                  label="产品状态"
+                  name={"status"}
+                  rules={[{ required: true, message: "请选择状态" }]}
+                >
                   <Select
                     style={{ width: 120 }}
                     onChange={onChangeSelect}
@@ -188,11 +210,16 @@ function DetailPage() {
                 <Form.Item<ProductType>
                   label="Created Date"
                   name={"created_date"}
+                  rules={[{ required: true, message: "请选择创建时间" }]}
                 >
                   <DatePicker onChange={onChangeDate} />
                 </Form.Item>
 
-                <Form.Item<ProductType> label="是否有效" name={"valid"}>
+                <Form.Item<ProductType>
+                  label="是否有效"
+                  name={"valid"}
+                  rules={[{ required: true, message: "请选择是否有效" }]}
+                >
                   <Radio.Group onChange={onChangeRadio}>
                     <Radio.Button value="true">True</Radio.Button>
                     <Radio.Button value="false">False</Radio.Button>
@@ -200,7 +227,10 @@ function DetailPage() {
                 </Form.Item>
 
                 {
-                  <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
+                  <Form.Item
+                    wrapperCol={{ offset: 8, span: 16 }}
+                    rules={[{ required: true }]}
+                  >
                     <Space>
                       <Button type="primary" htmlType="submit">
                         提交

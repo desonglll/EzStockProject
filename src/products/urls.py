@@ -10,7 +10,14 @@ Date: 2024/1/7
 
 from django.urls import path
 
-from .views import ProductAPIView, StatusAPIView, CategoryAPIView, ByStatusAPIView, ByCategoryAPIView
+from .views import (
+    InfoAPIView,
+    ProductAPIView,
+    StatusAPIView,
+    CategoryAPIView,
+    ByStatusAPIView,
+    ByCategoryAPIView,
+)
 
 urlpatterns = [
     # 列表： / get
@@ -24,4 +31,5 @@ urlpatterns = [
     path("by_status/<int:sid>", ByStatusAPIView.as_view()),
     path("cate", CategoryAPIView.as_view()),
     path("by_cate/<int:cid>", ByCategoryAPIView.as_view()),
+    path("info", InfoAPIView.as_view()),
 ]
