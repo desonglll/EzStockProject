@@ -14,6 +14,7 @@ import ListPage from "../pages/ListPage";
 import Dashboard from "../pages/Dashboard";
 import { getCategory, getStatus } from "../utils/info";
 import CreateProductPage from "../pages/CreateProductPage";
+import DisplayPage from "../pages/DisplayPage";
 
 interface BreadItem {
   title: string;
@@ -183,6 +184,10 @@ function MenuBar() {
                 <Route
                   path="/products/detail/:id"
                   Component={DetailPage}
+                ></Route>
+                <Route
+                  path="/products/display/:id"
+                  Component={DisplayPage}
                 ></Route>
               </Routes>
             </Content>

@@ -129,8 +129,13 @@ function ListPage() {
       render: (_, record) => (
         <Space size="middle">
           <Popover content={"详情操作"} title="详情">
-            <Button type="primary" href={`/products/detail/${record.id}`}>
+            <Button type="primary" href={`/products/display/${record.id}`}>
               详情
+            </Button>
+          </Popover>
+          <Popover content={"修改操作"} title="修改">
+            <Button type="primary" href={`/products/detail/${record.id}`}>
+              修改
             </Button>
           </Popover>
           <Popover content={"删除操作"} title="删除">
