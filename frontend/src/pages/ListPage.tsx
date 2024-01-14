@@ -1,7 +1,7 @@
 import "bootstrap/dist/css/bootstrap.css";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, Route, useNavigate, useParams } from "react-router-dom";
 import Table, { ColumnsType } from "antd/es/table";
 import { TableRowSelection } from "antd/es/table/interface";
 import {
@@ -36,6 +36,7 @@ interface Result {
 function ListPage() {
   const { sid } = useParams();
   const { cid } = useParams();
+  const navigate = useNavigate();
 
   const [result, setResult] = useState<Result>();
   const [items, setItems] = useState<Product[]>();
@@ -303,14 +304,20 @@ function ListPage() {
       <List
         dataSource={items}
         renderItem={(item, index) => (
-          <List.Item>
+          <List.Item
+            onClick={() => {
+              // navigate(`/products/display/${item.id}`);
+            }}
+          >
             <List.Item.Meta
               avatar={
-                <Avatar
-                  src={String(instance.defaults.baseURL) + `${item.image}`}
-                  shape="square"
-                  size={64}
-                />
+                <a href={String(instance.defaults.baseURL) + `${item.image}`}>
+                  <Avatar
+                    src={String(instance.defaults.baseURL) + `${item.image}`}
+                    shape="square"
+                    size={64}
+                  />
+                </a>
               }
               title={<a href={`/products/display/${item.id}`}>{item.title}</a>}
               description={`${item.description}`}

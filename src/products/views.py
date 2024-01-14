@@ -4,6 +4,7 @@ from django.db.models import Count
 from django.forms import model_to_dict
 from django.http import HttpResponse, JsonResponse, Http404
 from django.utils import timezone
+from rest_framework.decorators import api_view
 from rest_framework.exceptions import ValidationError
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -54,6 +55,9 @@ class ProductAPIView(APIView):
             product = self.get_object(pid)
             data = model_to_dict(product, exclude="image")
             data["image"] = product.image.url
+            data["last_change"] = product.last_change
+            if data["last_changed_by"] == "":
+                data["last_changed_by"] = "Unknown"
             return Result.success(data=data)
         else:
             # 设定获取所有数据时是按照什么样的排序进行
@@ -230,10 +234,11 @@ class ByCategoryAPIView(APIView):
                 return Result.error(msg="Invalid page number")
 
 
-class InfoAPIView(APIView):
-    def get(self, request):
-        total = Product.objects.all().count()
-        valid = Product.objects.filter(valid=True).count()
-        invalid = Product.objects.filter(valid=False).count()
-        context = {"total": total, "valid": valid, "invalid": invalid}
-        return Result.success(data=context)
+
+@api_view(["GET"])
+def get_info(request):
+    total = Product.objects.all().count()
+    valid = Product.objects.filter(valid=True).count()
+    invalid = Product.objects.filter(valid=False).count()
+    context = {"total": total, "valid": valid, "invalid": invalid}
+    return Result.success(data=context)

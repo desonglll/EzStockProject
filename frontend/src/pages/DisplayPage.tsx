@@ -3,6 +3,7 @@ import "bootstrap/dist/css/bootstrap.css";
 import { Badge, Descriptions, Image, Spin } from "antd";
 import axios from "axios";
 import { useParams } from "react-router-dom";
+import dayjs from "dayjs";
 
 interface Product {
   id: number;
@@ -81,12 +82,13 @@ function DisplayPage() {
         {
           key: "7",
           label: "创建时间",
-          children: product.created_date,
+          // children: dayjs(product.created_date, "YYYY-MM-DD"),
+          children: dayjs(product.created_date).format("YYYY-MM-DD HH:mm:ss"),
         },
         {
           key: "8",
           label: "上次改变时间",
-          children: product.last_change,
+          children: dayjs(product.last_change).format("YYYY-MM-DD HH:mm:ss"),
         },
         {
           key: "9",
@@ -96,9 +98,15 @@ function DisplayPage() {
             return "无效";
           })(),
         },
+        {
+          key: "10",
+          label: "最后修改由",
+          children: product.last_changed_by,
+        },
       ];
       setDisplayItems(items);
       setImageLink(product.image);
+      console.log(product);
     } catch (error) {
       console.log(error);
     } finally {
@@ -117,12 +125,17 @@ function DisplayPage() {
       ) : (
         <>
           <div className="container">
-            <Descriptions title="产品详情" bordered items={displayItems} />
-            <Image
-              width={500}
-              src={String(instance.defaults.baseURL) + imageLink}
-            />
+            <div
+              className="container"
+              style={{ display: "flex", justifyContent: "center" }}
+            >
+              <Image
+                width={500}
+                src={String(instance.defaults.baseURL) + imageLink}
+              />
+            </div>
           </div>
+          <Descriptions title="产品详情" bordered items={displayItems} />
         </>
       )}
     </Spin>

@@ -99,11 +99,15 @@ function MenuBar() {
     },
     {
       label: (
-        <a href="https://ant.design" target="_blank" rel="noopener noreferrer">
-          Navigation Four - Link
+        <a
+          href="/"
+          //  target="_blank"
+          rel="noopener noreferrer"
+        >
+          External Link
         </a>
       ),
-      key: "alipay",
+      key: "external_link",
     },
   ];
   const navigate = useNavigate();
