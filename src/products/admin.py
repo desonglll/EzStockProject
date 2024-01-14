@@ -52,7 +52,7 @@ class ProductAdmin(admin.ModelAdmin):
 
     # DateField: 2024-01-01
     def get_image(self, obj):
-        return format_html('<img src="{}" width="100%" height="100%" />'.format(obj.image.url))
+        return format_html('<img src="{}" width="50%" height="50%" />'.format(obj.image.url))
 
     # fieldsets = [
     #     (

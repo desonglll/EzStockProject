@@ -4,12 +4,23 @@ import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import Table, { ColumnsType } from "antd/es/table";
 import { TableRowSelection } from "antd/es/table/interface";
-import { Button, Pagination, Popconfirm, Popover, Space, message } from "antd";
+import {
+  Avatar,
+  Button,
+  List,
+  Pagination,
+  Popconfirm,
+  Popover,
+  Space,
+  message,
+} from "antd";
 
 interface Product {
   key: React.Key;
   id: number;
   title: string;
+  description: string;
+  image: string;
   price: string;
   status: string;
   category: string;
@@ -134,7 +145,10 @@ function ListPage() {
             </Button>
           </Popover>
           <Popover content={"修改操作"} title="修改">
-            <Button type="primary" href={`/products/detail/${record.id}`}>
+            <Button
+              type="primary"
+              href={`http://localhost:8000/admin/products/product/${record.id}/change/`}
+            >
               修改
             </Button>
           </Popover>
@@ -179,6 +193,8 @@ function ListPage() {
         const useable_data = response.data.data.map((item: Product) => ({
           id: item.id,
           title: item.title,
+          description: item.description,
+          image: item.image,
           price: item.price,
           status: (() => {
             if (item.status === "1") return "未发布";
@@ -213,6 +229,9 @@ function ListPage() {
         const useable_data = response.data.data.map((item: Product) => ({
           id: item.id,
           title: item.title,
+          description: item.description,
+          image: item.image,
+
           price: item.price,
           status: (() => {
             if (item.status === "1") return "未发布";
@@ -246,6 +265,9 @@ function ListPage() {
           id: item.id,
           title: item.title,
           price: item.price,
+          description: item.description,
+          image: item.image,
+
           status: (() => {
             if (item.status === "1") return "未发布";
             if (item.status === "2") return "已发布";
@@ -278,13 +300,53 @@ function ListPage() {
 
   return (
     <>
-      <Table
+      <List
+        dataSource={items}
+        renderItem={(item, index) => (
+          <List.Item>
+            <List.Item.Meta
+              avatar={
+                <Avatar
+                  src={String(instance.defaults.baseURL) + `${item.image}`}
+                  shape="square"
+                  size={64}
+                />
+              }
+              title={<a href={`/products/display/${item.id}`}>{item.title}</a>}
+              description={`${item.description}`}
+            />
+            <Popover content={"修改操作"} title="修改">
+              <Button
+                type="primary"
+                href={`http://localhost:8000/admin/products/product/${item.id}/change/`}
+              >
+                修改
+              </Button>
+            </Popover>
+            <Popover content={"删除操作"} title="删除">
+              <Popconfirm
+                title="删除此产品"
+                description="要删除此产品吗？此操作不可恢复！"
+                onConfirm={() => confirmDelete(item.id)}
+                onCancel={() => cancelDelete(item.id)}
+                okText="确认"
+                cancelText="再想想"
+              >
+                <Button danger disabled>
+                  删除
+                </Button>
+              </Popconfirm>
+            </Popover>
+          </List.Item>
+        )}
+      />
+      {/* <Table
         rowSelection={rowSelection}
         columns={columns}
         dataSource={items}
         rowKey="id"
         pagination={false}
-      />
+      /> */}
       <Pagination
         current={currentPage}
         total={totalItems}

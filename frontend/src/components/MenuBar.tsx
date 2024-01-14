@@ -194,7 +194,7 @@ function MenuBar() {
           </Layout>
         </Content>
         <Footer style={{ textAlign: "center" }}>
-          Ant Design ©{new Date().getFullYear()} Created by Ant UED
+          EzStock ©{new Date().getFullYear()} Created by Mike Shinoda
         </Footer>
       </Layout>
     </>

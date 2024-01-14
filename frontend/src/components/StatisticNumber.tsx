@@ -30,11 +30,11 @@ function StatisticNumber() {
   return (
     <Row gutter={16}>
       <Col span={12}>
-        <Statistic title="Active Users" value={total} formatter={formatter} />
+        <Statistic title="产品总数" value={total} formatter={formatter} />
       </Col>
       <Col span={12}>
         <Statistic
-          title="Account Balance (CNY)"
+          title="产品总数"
           value={total}
           precision={1}
           formatter={formatter}

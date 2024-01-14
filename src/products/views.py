@@ -1,6 +1,7 @@
 from django.core.paginator import Paginator, EmptyPage
 from django.core.serializers import serialize
 from django.db.models import Count
+from django.forms import model_to_dict
 from django.http import HttpResponse, JsonResponse, Http404
 from django.utils import timezone
 from rest_framework.exceptions import ValidationError
@@ -49,9 +50,11 @@ class ProductAPIView(APIView):
         page_size = request.GET.get("page_size", 10)
 
         if pid:
+            print("PID called")
             product = self.get_object(pid)
-            serializer = ProductSerializer(product)
-            return Result.success(data=serializer.data)
+            data = model_to_dict(product, exclude="image")
+            data["image"] = product.image.url
+            return Result.success(data=data)
         else:
             # 设定获取所有数据时是按照什么样的排序进行
             products = Product.objects.all().order_by("-id")
@@ -121,14 +124,12 @@ class ProductAPIView(APIView):
         product = self.get_object(pid)
         serializer = ProductSerializer(product, data=request.data)
         if serializer.is_valid():
-            print("aaa")
             # 手动更新 last_change 字段
             serializer.validated_data["last_change"] = timezone.now()
 
             serializer.save()
             return Result.success(serializer.data)
         else:
-            print("bbbb")
             return Result.error(serializer.errors)
 
 
@@ -150,7 +151,6 @@ class ByStatusAPIView(APIView):
         page = request.GET.get("page", 1)
         page_size = request.GET.get("page_size", 10)
         if sid is not None and sid != 0:
-            print(sid)
             products = Product.objects.filter(status=sid).order_by("-id")
             paginator = Paginator(products, page_size)
             try:
