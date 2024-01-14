@@ -56,22 +56,18 @@ MIDDLEWARE = [
     "django.contrib.sessions.middleware.SessionMiddleware",
     'corsheaders.middleware.CorsMiddleware',  # 浏览器跨域请求
     "django.middleware.common.CommonMiddleware",
-    "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
-# 浏览器跨域请求
-CORS_ALLOWED_ORIGINS = [
-    "http://localhost:8001",  # React应用的地址]
-]
-CSRF_TRUSTED_ORIGINS = [
-    "http://localhost:8001",  # 替换为你的前端应用的地址
-]
-CORS_ALLOW_CREDENTIALS = True
 
-CSRF_COOKIE_SECURE = True  # 如果你的网站是通过HTTPS访问的
-CSRF_COOKIE_SAMESITE = 'Lax'  # 或 'Strict'，取决于你的要求
+CORS_ALLOW_ALL_ORIGINS = True # If this is used then `CORS_ALLOWED_ORIGINS` will not have any effect
+
+# 浏览器跨域请求
+# CORS_ALLOWED_ORIGINS = [
+#     "http://localhost:8001",  # React应用的地址]
+# ]
+
 ROOT_URLCONF = "EzStock.urls"
 
 TEMPLATES = [

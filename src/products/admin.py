@@ -49,6 +49,7 @@ class ProductAdmin(admin.ModelAdmin):
     list_display_links = ["id", "title", "price", "category", "valid", "status", "created_date",
                           "last_change"]
     search_fields = ["title", "last_change"]
+    readonly_fields = ('last_changed_by',)
 
     # DateField: 2024-01-01
     def get_image(self, obj):

@@ -318,7 +318,10 @@ function ListPage() {
             <Popover content={"修改操作"} title="修改">
               <Button
                 type="primary"
-                href={`http://localhost:8000/admin/products/product/${item.id}/change/`}
+                href={
+                  String(instance.defaults.baseURL) +
+                  `/admin/products/product/${item.id}/change/`
+                }
               >
                 修改
               </Button>
